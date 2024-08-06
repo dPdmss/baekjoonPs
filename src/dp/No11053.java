@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/*
+수열 A가 주어졌을 때, 가장 긴 증가하는 부분 수열을 구하는 프로그램을 작성하시오.
+
+예를 들어, 수열 A = {10, 20, 10, 30, 20, 50} 인 경우에 가장 긴 증가하는 부분 수열은 A = {10, 20, 10, 30, 20, 50} 이고, 길이는 4이다.
+
+6
+10 20 10 30 20 50
+ */
 public class No11053 {
 
     static int[] arr;
@@ -23,18 +31,18 @@ public class No11053 {
         }
         br.close();
 
-        System.out.println(solve(n));
-    }
-
-    static int solve(int n){
-        if (dp[n] == null) {
-            dp[n] = 1;
-            for (int i = n-1; i >= 0; i--) {
-                if(arr[i] < arr[n]){
-                    dp[n] = Math.max(dp[n], solve(i)+1);
+        for (int i = 1; i <= n; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if(arr[i] > arr[j]) {
+                    dp[i] = Math.max(dp[i],dp[j]+1);
                 }
             }
         }
-        return dp[n];
+        int max = 0;
+        for (int s = 0; s < dp.length; s++) {
+            max = Math.max(max, dp[s]);
+        }
+        System.out.println(max);
     }
 }
